@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,6 +41,8 @@ public class OrderStageController implements Initializable {
     @FXML
     private Button submit;
     
+    private int extraItems = 0;
+    
     private void loadExtraIngredients() {
       extraList.removeAll(extraList);
       CheckBox tomatoes = new CheckBox("Tomatoes");
@@ -56,6 +59,41 @@ public class OrderStageController implements Initializable {
       extraList.addAll(tomatoes, onions, olives, spinach, mayo, honeymustard,
           oilvinegar, moz, cheddar);
       extraIngredients.getItems().addAll(extraList);
+      
+      extraList.forEach(extra -> {
+        
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+
+          @Override
+          public void handle(ActionEvent arg0) {
+             if(extra.isSelected()) {
+               extraItems++;
+               if(extraItems == 6) {
+                 extraList.forEach(subExtra -> {
+                   if(!(subExtra.isSelected())) {
+                     subExtra.setDisable(true);
+                   }
+                 });
+               }
+             }
+             else {
+               if(extraItems == 6) {
+                 extraList.forEach(subExtra -> {
+                   if(!(subExtra.isSelected())) {
+                     subExtra.setDisable(false);
+                   }
+                 });
+               }
+               extraItems--;
+             }
+          } 
+          
+        };
+        
+        extra.setOnAction(event); 
+        
+      });
+      
     }
     
     private void loadDefaultSandwich() {
