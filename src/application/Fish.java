@@ -16,8 +16,7 @@ public class Fish extends Sandwich{
 
   @Override
   public double price() {
-    // TODO Auto-generated method stub
-    return 0;
+    return 12.99;
   }
 
   @Override
