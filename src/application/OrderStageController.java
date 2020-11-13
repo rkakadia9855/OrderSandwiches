@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,6 +36,9 @@ public class OrderStageController implements Initializable {
 
     @FXML
     private Button addSandwich;
+    
+    @FXML
+    private TextArea basicIngredients;
 
     @FXML
     private Button viewDetails;
@@ -129,6 +133,7 @@ public class OrderStageController implements Initializable {
       combo.getItems().addAll(sandwichList);
       combo.getSelectionModel().selectFirst();
       price.setText("$ 8.99");
+      basicIngredients.setText("* Fried Chicken\n* Spicy Sauce\n* Pickles");
     }
 
     @FXML
@@ -148,6 +153,7 @@ public class OrderStageController implements Initializable {
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 10.99;
         price.setText("$ "+sandwichTotal);
+        basicIngredients.setText("* Roast Beef\n* Provolone Cheese\n* Mustard");
       }
       else if(combo.getValue().equals("Chicken Sandwich")) {
         try {
@@ -159,6 +165,7 @@ public class OrderStageController implements Initializable {
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 8.99;
         price.setText("$ "+sandwichTotal);
+        basicIngredients.setText("* Fried Chicken\n* Spicy Sauce\n* Pickles");
       }
       else if(combo.getValue().equals("Fish Sandwich")) {
         try {
@@ -170,6 +177,7 @@ public class OrderStageController implements Initializable {
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 12.99;
         price.setText("$ "+String.format("%.2f", sandwichTotal));
+        basicIngredients.setText("* Grilled Snapper\n* Cilantro\n* Lime");
       }
     }
 
