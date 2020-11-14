@@ -7,12 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -163,7 +165,20 @@ public class OrderStageController implements Initializable {
       double extraCost = extraItems * 1.99;
       sandwichTotal += extraCost;
       OrderLine oline = new OrderLine(orderDB.lineNumber, selected, sandwichTotal);
-      orderDB.add(oline);
+      if(orderDB.add(oline)) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Successfull!!");
+        alert.setHeaderText("Sandwich Added!");
+        alert.setContentText(combo.getValue()+" has been added to your order.");
+        alert.showAndWait();
+      }
+      else {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error!!");
+        alert.setHeaderText("Sandwich couldn't be added!");
+        alert.setContentText(combo.getValue()+" couldn't be added to order due to error.");
+        alert.showAndWait();
+      }
     }
 
     @FXML
@@ -209,7 +224,18 @@ public class OrderStageController implements Initializable {
     @FXML
     void submitOrder(ActionEvent event) {
       orderDB.printOrderLine();
+      Alert alert = new Alert(AlertType.CONFIRMATION);
+      alert.setTitle("Successfull!!");
+      alert.setHeaderText("Order Placed!");
+      alert.setContentText("Your order has been successfully submitted. ");
+      alert.showAndWait();
       orderDB = new Order();
+      extraItems = 0;
+      loadDefaultSandwich();
+      extraList.forEach(extra -> {
+        if(extra.isSelected())
+          extra.setSelected(false);
+      });
     }
 
     @FXML
