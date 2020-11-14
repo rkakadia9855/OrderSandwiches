@@ -6,4 +6,8 @@ public class Extra {
   public Extra(String ingredient) {
     this.ingredient = ingredient;
   }
+  
+  public String name() {
+    return this.ingredient;
+  }
 }

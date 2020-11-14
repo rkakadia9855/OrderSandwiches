@@ -10,4 +10,14 @@ public class OrderLine {
     this.sandwich = sandwich;
     this.price = price;
   }
+  
+  public double orderTotal() {
+    return this.sandwich.price();
+  }
+  
+ public String sandwichToString() {
+   String rtn = "Serial Number: " + this.lineNumber + "\n";
+   rtn += sandwich.toString();
+   return rtn;
+ }
 }

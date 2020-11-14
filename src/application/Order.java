@@ -1,6 +1,14 @@
 package application;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Order implements Customizable {
 
@@ -14,18 +22,55 @@ public class Order implements Customizable {
   
   @Override
   public boolean add(Object obj) {
-    orderlines.add((OrderLine) obj);
-    return true;
+    if(orderlines.add((OrderLine) obj)) {
+      lineNumber++;
+      return true;
+    }
+    else 
+      return false;
   }
 
   @Override
   public boolean remove(Object obj) {
-    int orderIndex = orderlines.indexOf((OrderLine) obj);
-    if(orderIndex != -1) {
-      orderlines.remove(orderIndex);
+    if(orderlines.remove((OrderLine) obj)) {
+      lineNumber--;
       return true;
     }
-    return false;
+    else
+      return false;
+  }
+  
+  public void printOrderLine() {
+    String outputString = "";
+    for(int i = 0; i < lineNumber; i++) {
+      outputString += orderlines.get(i).sandwichToString() + "\n";
+    }
+    double orderTotal = 0.0;
+    for(int i = 0; i < lineNumber; i++) {
+      orderTotal += orderlines.get(i).orderTotal();
+    }
+    outputString += "Order Total: $" + String.format("%.2f", orderTotal);
+    FileChooser chooser = new FileChooser();
+    chooser.setTitle("Open Target File for the Export");
+    chooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+            new ExtensionFilter("All Files", "*.*"));
+    Stage stage = new Stage();
+    File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
+    //write code to write to the file.
+    String exportData = outputString;
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(targetFile))) {
+      if(writer != null) {
+        writer.write(exportData);
+        writer.flush();
+        writer.close();
+      }
+    } catch (Exception e) {
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Warning!!");
+      alert.setHeaderText("I/O Error");
+      alert.setContentText("An error occured while trying to export the data: ."+e.getMessage());
+      alert.showAndWait();
+    }
   }
 
 }

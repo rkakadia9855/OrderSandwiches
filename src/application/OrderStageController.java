@@ -138,7 +138,32 @@ public class OrderStageController implements Initializable {
 
     @FXML
     void addToOrder(ActionEvent event) {
-
+      String selectedSandwich = combo.getValue();
+      Sandwich selected =  null;
+      double sandwichTotal = 0.0;
+      if(selectedSandwich.equals("Chicken Sandwich")) {
+        selected = new Chicken();
+        sandwichTotal = 8.99;
+      }
+      else if(selectedSandwich.equals("Beef Sandwich")) {
+        selected = new Beef();
+        sandwichTotal = 10.99;
+      }
+      else if(selectedSandwich.equals("Fish Sandwich")) {
+        selected = new Fish();
+        sandwichTotal = 12.99;
+      }
+      if(selected != null) {
+        for(int i = 0; i < extraList.size(); i++) {
+          if(extraList.get(i).isSelected()) {
+            selected.add(new Extra(extraList.get(i).getText()));
+          }
+        }
+      }
+      double extraCost = extraItems * 1.99;
+      sandwichTotal += extraCost;
+      OrderLine oline = new OrderLine(orderDB.lineNumber, selected, sandwichTotal);
+      orderDB.add(oline);
     }
 
     @FXML
@@ -183,12 +208,13 @@ public class OrderStageController implements Initializable {
 
     @FXML
     void submitOrder(ActionEvent event) {
-
+      orderDB.printOrderLine();
+      orderDB = new Order();
     }
 
     @FXML
     void viewOrder(ActionEvent event) {
-
+      
     }
 
     @Override
