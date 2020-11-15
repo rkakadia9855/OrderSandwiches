@@ -20,6 +20,24 @@ public class Order implements Customizable {
     orderlines = new ArrayList<OrderLine>();
   }
   
+  public int numOrders() {
+    return orderlines.size();
+  }
+  
+  public int getSerialNumber(int index) {
+    for(int i = 0; i < orderlines.size(); i++) {
+      String temp = orderlines.get(i).sandwichToString();
+      Integer tempIndex = Integer.parseInt(temp.charAt(0) + "");
+      if(tempIndex == index)
+        return i;
+    }
+    return -1;
+  }
+  
+  public OrderLine getOrderLine(int index) {
+    return orderlines.get(index);
+  }
+  
   @Override
   public boolean add(Object obj) {
     if(orderlines.add((OrderLine) obj)) {
@@ -40,17 +58,30 @@ public class Order implements Customizable {
       return false;
   }
   
-  public void printOrderLine() {
-    String outputString = "";
-    for(int i = 0; i < lineNumber; i++) {
-      outputString += orderlines.get(i).sandwichToString() + "\n";
-    }
+  public double getOrderTotal() {
     double orderTotal = 0.0;
     for(int i = 0; i < lineNumber; i++) {
       orderTotal += orderlines.get(i).orderTotal();
     }
-    outputString += "Order Total: $" + String.format("%.2f", orderTotal);
-    FileChooser chooser = new FileChooser();
+    return orderTotal;
+  }
+  
+  public String getDetails(int index) {
+    return orderlines.get(index).sandwichToString();
+  }
+   
+  public String printOrderLine() {
+    String outputString = "";
+    for(int i = 0; i < lineNumber; i++) {
+      outputString += orderlines.get(i).sandwichToString();
+    }
+   /* double orderTotal = 0.0;
+    for(int i = 0; i < lineNumber; i++) {
+      orderTotal += orderlines.get(i).orderTotal();
+    }
+    outputString += "Order Total: $" + String.format("%.2f", orderTotal); */
+    return outputString; 
+   /* FileChooser chooser = new FileChooser();
     chooser.setTitle("Open Target File for the Export");
     chooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
             new ExtensionFilter("All Files", "*.*"));
@@ -70,7 +101,7 @@ public class Order implements Customizable {
       alert.setHeaderText("I/O Error");
       alert.setContentText("An error occured while trying to export the data: ."+e.getMessage());
       alert.showAndWait();
-    }
+    } */
   }
 
 }

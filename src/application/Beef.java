@@ -33,18 +33,15 @@ public class Beef extends Sandwich {
 
   @Override
   public String toString() {
-    String details = "Beef Sandwich\n";
-    details += "Basic ingredients: \n* Roast Beef, Provolone Cheese, Mustard.\n";
-    details += "Extra ingredients: \n* ";
+    String details = "Beef Sandwich; ";
+    details += "Roast Beef, Provolone Cheese, Mustard, ";
+    details += "Extra: ";
     if(this.extras.size() == 0)
-      details += "none.\n";
+      details += "none. ";
     for(int i = 0; i < this.extras.size(); i++) {
-      if(i != (this.extras.size()-1)) 
-        details += this.extras.get(i).name() + ", ";
-      else 
-        details += this.extras.get(i).name() + ".\n";
+      details += this.extras.get(i).name() + ", ";
     }
-    details += "Price: $"+ String.format("%.2f", price()) + "\n\n";
+    details += "Price $"+ String.format("%.2f", price())+"\n";
     return details;
   }
 

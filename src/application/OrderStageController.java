@@ -1,12 +1,16 @@
 package application;
 
+import java.io.IOException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -17,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class OrderStageController implements Initializable {
   
@@ -48,6 +53,12 @@ public class OrderStageController implements Initializable {
 
     @FXML
     private Button viewDetails;
+    
+    FXMLLoader loader;
+    Parent root;
+    OrderSummaryController controller;
+    Scene scene;
+    Stage stage;
 
    /* @FXML
     private Button submit; */
@@ -56,6 +67,10 @@ public class OrderStageController implements Initializable {
     private Button clearButton;
     
     private int extraItems = 0;
+    
+    public Order passOrder() {
+      return orderDB;
+    }
     
     private void loadExtraIngredients() {
       extraList.removeAll(extraList);
@@ -176,12 +191,16 @@ public class OrderStageController implements Initializable {
       double extraCost = extraItems * 1.99;
       sandwichTotal += extraCost;
       OrderLine oline = new OrderLine(orderDB.lineNumber, selected, sandwichTotal);
+      String updateString = oline.sandwichToString();
       if(orderDB.add(oline)) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Successfull!!");
         alert.setHeaderText("Sandwich Added!");
         alert.setContentText(combo.getValue()+" has been added to your order.");
         alert.showAndWait();
+        if(loader != null) {
+          controller.updateScreen(updateString);
+        }
       }
       else {
         Alert alert = new Alert(AlertType.ERROR);
@@ -265,22 +284,21 @@ public class OrderStageController implements Initializable {
     @FXML
     void viewOrder(ActionEvent event) {
       try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("OrderSummary.FXML"));
-    		Parent root = loader.load();
+            loader = new FXMLLoader(getClass().getResource("OrderSummary.FXML"));
+    		root = loader.load();
     		
-    		OrderSummaryController controller = loader.getController();
+    		controller = loader.getController();
     		controller.selectOrder(orderDB);
         
-    		Scene scene = new Scene(root); 	  
-    		Stage stage = new Stage();
+    		scene = new Scene(root); 	  
+    		stage = new Stage();
     		stage.setTitle("Order Summary");
     		stage.setScene(scene);
-    		stage.show();
-    		
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    		}
+    		stage.show(); 
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
     }
 
     @Override
