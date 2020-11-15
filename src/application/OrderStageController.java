@@ -264,7 +264,23 @@ public class OrderStageController implements Initializable {
 
     @FXML
     void viewOrder(ActionEvent event) {
-      
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("OrderSummary.FXML"));
+    		Parent root = loader.load();
+    		
+    		OrderSummaryController controller = loader.getController();
+    		controller.selectOrder(orderDB);
+        
+    		Scene scene = new Scene(root); 	  
+    		Stage stage = new Stage();
+    		stage.setTitle("Order Summary");
+    		stage.setScene(scene);
+    		stage.show();
+    		
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    		}
     }
 
     @Override
