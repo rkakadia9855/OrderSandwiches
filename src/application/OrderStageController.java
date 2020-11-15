@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 public class OrderStageController implements Initializable {
   
     ObservableList<CheckBox> extraList = FXCollections.observableArrayList();
+    ObservableList<String> extraSelectedList = FXCollections.observableArrayList();
     ObservableList<String> sandwichList = FXCollections.observableArrayList();
     Order orderDB = new Order();
 
@@ -32,6 +33,9 @@ public class OrderStageController implements Initializable {
 
     @FXML
     private ListView<CheckBox> extraIngredients;
+    
+    @FXML
+    private ListView<String> selectedExtra;
 
     @FXML
     private TextField price;
@@ -75,6 +79,8 @@ public class OrderStageController implements Initializable {
           public void handle(ActionEvent arg0) {
              if(extra.isSelected()) {
                extraItems++;
+               selectedExtra.getItems().add(extra.getText());
+               extraSelectedList.add(extra.getText());
                if(extraItems == 6) {
                  extraList.forEach(subExtra -> {
                    if(!(subExtra.isSelected())) {
@@ -104,6 +110,7 @@ public class OrderStageController implements Initializable {
                    }
                  });
                }
+               selectedExtra.getItems().remove((String)extra.getText());
                extraItems--;
                double extraCost = extraItems * 1.99;
                double sandwichCost = 0.0;
@@ -136,6 +143,7 @@ public class OrderStageController implements Initializable {
       combo.getSelectionModel().selectFirst();
       price.setText("$ 8.99");
       basicIngredients.setText("* Fried Chicken\n* Spicy Sauce\n* Pickles");
+      sandwichPhoto.setImage(new Image("Resources\\ChickenSandwich.JPG"));
     }
 
     @FXML
@@ -185,10 +193,11 @@ public class OrderStageController implements Initializable {
     void sandwichSelected(ActionEvent event) {
       if(combo.getValue().equals("Beef Sandwich")) {
         try {
-          sandwichPhoto.setImage(new Image("file:..\\Resources\\BeefSandwich.JPG"));
-        }
-        catch(Exception e) {
-          System.out.println("file:..\\Resources\\BeefSandwich.JPG");
+            Image image = new Image("Resources\\BeefSandwich.JPG");
+            sandwichPhoto.setImage(image);
+          //  sandwichPhoto.setCache(true);
+        } catch (Exception e) {
+            System.out.println("Resources\\BeefSandwich.JPG");
         }
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 10.99;
@@ -197,7 +206,7 @@ public class OrderStageController implements Initializable {
       }
       else if(combo.getValue().equals("Chicken Sandwich")) {
         try {
-          sandwichPhoto.setImage(new Image("file:..\\Resources\\ChickenSandwich.JPG"));
+          sandwichPhoto.setImage(new Image("Resources\\ChickenSandwich.JPG"));
         }
         catch(Exception e) {
           System.out.println("file:..\\Resources\\ChickenSandwich.JPG");
@@ -209,7 +218,7 @@ public class OrderStageController implements Initializable {
       }
       else if(combo.getValue().equals("Fish Sandwich")) {
         try {
-          sandwichPhoto.setImage(new Image("file:..\\Resources\\FishSandwich.JPG"));
+          sandwichPhoto.setImage(new Image("Resources\\FishSandwich.JPG"));
         }
         catch(Exception e) {
           System.out.println("file:..\\Resources\\FishSandwich.JPG");
