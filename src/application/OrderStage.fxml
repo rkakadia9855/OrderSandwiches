@@ -70,21 +70,21 @@
                 <RowConstraints maxHeight="128.33333110809326" minHeight="10.0" prefHeight="106.33334732055664" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="addSandwich" mnemonicParsing="false" onAction="#addToOrder" text="Add Sandwich" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="addSandwich" mnemonicParsing="false" onAction="#addToOrder" text="Add to Order" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="2" GridPane.rowIndex="2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="42.66668701171875" minWidth="9.999999046325684" prefWidth="12.666686058044434" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.6666119893392" minWidth="10.0" prefWidth="86.6666119893392" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="64.66668701171875" minWidth="10.0" prefWidth="16.66672134399414" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.33335367838542" minWidth="10.0" prefWidth="96.33335367838542" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="64.66668701171875" minWidth="5.666646321614579" prefWidth="5.666646321614579" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="68.33331298828125" minHeight="10.0" prefHeight="36.999989827473954" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="117.00000190734863" minHeight="10.0" prefHeight="107.6666768391927" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="viewDetails" mnemonicParsing="false" onAction="#viewOrder" text="View Details" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="viewDetails" mnemonicParsing="false" onAction="#viewOrder" text="Display Order" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearSelected" text="Clear" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
