@@ -49,8 +49,11 @@ public class OrderStageController implements Initializable {
     @FXML
     private Button viewDetails;
 
+   /* @FXML
+    private Button submit; */
+    
     @FXML
-    private Button submit;
+    private Button clearButton;
     
     private int extraItems = 0;
     
@@ -230,7 +233,7 @@ public class OrderStageController implements Initializable {
       }
     }
 
-    @FXML
+ /*   @FXML
     void submitOrder(ActionEvent event) {
       orderDB.printOrderLine();
       Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -245,6 +248,18 @@ public class OrderStageController implements Initializable {
         if(extra.isSelected())
           extra.setSelected(false);
       });
+    } */
+    
+    @FXML
+    void clearSelected(ActionEvent event) {
+      orderDB = new Order();
+      extraItems = 0;
+      loadDefaultSandwich();
+      extraList.forEach(extra -> {
+        if(extra.isSelected())
+          extra.setSelected(false);
+      });
+      selectedExtra.getItems().removeAll(extraSelectedList);
     }
 
     @FXML
