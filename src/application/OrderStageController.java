@@ -271,8 +271,6 @@ public class OrderStageController implements Initializable {
     
     @FXML
     void clearSelected(ActionEvent event) {
-      orderDB = new Order();
-      extraItems = 0;
       loadDefaultSandwich();
       extraList.forEach(extra -> {
         if(extra.isSelected())
