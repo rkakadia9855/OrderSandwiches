@@ -77,7 +77,12 @@ public class OrderSummaryController implements Initializable{
       total.setText(String.format("%.2f", list.getOrderTotal()));
     }
     
-        
+     public void updateScreen2(String updatedLine) {
+        orderlist.remove(updatedLine);
+        receipt.getItems().remove(updatedLine);
+        total.setText(String.format("%.2f", list.getOrderTotal()));
+      }
+	
     @FXML
     void backToOrder(ActionEvent event) {
     	Stage stage = (Stage) back.getScene().getWindow();
@@ -86,7 +91,10 @@ public class OrderSummaryController implements Initializable{
 
     @FXML
     void clearOrder(ActionEvent event) {
-
+	 receipt.getItems().removeAll(orderlist);
+    	 list = new Order();
+    	 controller1.orderDB = list;
+    	 total.setText(null);
     }
 
     @FXML
@@ -149,7 +157,18 @@ public class OrderSummaryController implements Initializable{
 
     @FXML
     void removeSandwich(ActionEvent event) {
-
+	
+	final int selectedIdx = receipt.getSelectionModel().getSelectedIndex();
+	            if (selectedIdx != -1) {
+	           
+	                receipt.getItems().remove(selectedIdx);       
+	                OrderLine orig = list.getOrderLine(selectedIdx);
+	         
+	                if(list.remove(orig)) {   
+	                	String update = orig.sandwichToString();
+	                	updateScreen2(update);
+	                }
+    	  }
     }
 
 
