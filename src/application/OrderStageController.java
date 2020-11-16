@@ -289,6 +289,7 @@ public class OrderStageController implements Initializable {
     		
     		controller = loader.getController();
     		controller.selectOrder(orderDB);
+        controller.setView1Controller(this);
         
     		scene = new Scene(root); 	  
     		stage = new Stage();
