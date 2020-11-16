@@ -168,7 +168,14 @@ public class OrderSummaryController implements Initializable{
 	                	String update = orig.sandwichToString();
 	                	updateScreen2(update);
 	                }
-    	  }
+	            }
+	            for(int i = selectedIdx; i < list.numOrders(); i++) {
+	              list.getOrderLine(i).setLineNumber(list.getOrderLine(i).getLineNumber() - 1);
+	            }
+	            receipt.getItems().clear();
+	            orderlist.clear();
+	            fillListView();
+	          //  
     }
 
 

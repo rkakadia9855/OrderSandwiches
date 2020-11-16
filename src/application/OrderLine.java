@@ -15,6 +15,10 @@ public class OrderLine {
     return this.lineNumber;
   }
   
+  public void setLineNumber(int num) {
+    this.lineNumber = num;
+  }
+  
   public Sandwich getSandwich() {
     return this.sandwich;
   }
