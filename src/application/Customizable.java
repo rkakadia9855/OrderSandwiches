@@ -1,3 +1,7 @@
+/**
+ * This interface represents a customizable sandwich/class
+ * @author John Juarez, Rudra Kakadia
+ */
 package application;
 
 public interface Customizable {

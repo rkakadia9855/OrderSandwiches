@@ -1,3 +1,7 @@
+/**
+ * This class is a controller for 1st stage
+ * @author John Juarez, Rudra Kakadia
+ */
 package application;
 
 import java.io.IOException;
@@ -59,19 +63,23 @@ public class OrderStageController implements Initializable {
     OrderSummaryController controller;
     Scene scene;
     Stage stage;
-
-   /* @FXML
-    private Button submit; */
     
     @FXML
     private Button clearButton;
     
     private int extraItems = 0;
     
+    /**
+     * passes the order
+     * @return the order to pass
+     */
     public Order passOrder() {
       return orderDB;
     }
     
+    /**
+     * loads the extra ingredients in the listview
+     */
     private void loadExtraIngredients() {
       extraList.removeAll(extraList);
       CheckBox tomatoes = new CheckBox("Tomatoes");
@@ -154,6 +162,9 @@ public class OrderStageController implements Initializable {
       
     }
     
+    /**
+     * loads up the combobox and other fields
+     */
     private void loadDefaultSandwich() {
       sandwichList.removeAll(sandwichList);
       sandwichList.addAll("Chicken Sandwich", "Beef Sandwich", "Fish Sandwich");
@@ -165,6 +176,10 @@ public class OrderStageController implements Initializable {
     }
 
     @FXML
+    /**
+     * adds the sandwich to order
+     * @param event
+     */
     void addToOrder(ActionEvent event) {
       String selectedSandwich = combo.getValue();
       Sandwich selected =  null;
@@ -212,14 +227,21 @@ public class OrderStageController implements Initializable {
     }
 
     @FXML
+    /**
+     * triggers upon changing the selected sandwich
+     * @param event
+     */
     void sandwichSelected(ActionEvent event) {
       if(combo.getValue().equals("Beef Sandwich")) {
         try {
             Image image = new Image("Resources\\BeefSandwich.JPG");
             sandwichPhoto.setImage(image);
-          //  sandwichPhoto.setCache(true);
         } catch (Exception e) {
-            System.out.println("Resources\\BeefSandwich.JPG");
+          Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle("Error!!");
+          alert.setHeaderText("Sandwich image not loaded!");
+          alert.setContentText("Error while loading the image.");
+          alert.showAndWait();
         }
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 10.99;
@@ -231,7 +253,11 @@ public class OrderStageController implements Initializable {
           sandwichPhoto.setImage(new Image("Resources\\ChickenSandwich.JPG"));
         }
         catch(Exception e) {
-          System.out.println("file:..\\Resources\\ChickenSandwich.JPG");
+          Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle("Error!!");
+          alert.setHeaderText("Sandwich image not loaded!");
+          alert.setContentText("Error while loading the image.");
+          alert.showAndWait();
         }
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 8.99;
@@ -243,7 +269,11 @@ public class OrderStageController implements Initializable {
           sandwichPhoto.setImage(new Image("Resources\\FishSandwich.JPG"));
         }
         catch(Exception e) {
-          System.out.println("file:..\\Resources\\FishSandwich.JPG");
+          Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle("Error!!");
+          alert.setHeaderText("Sandwich image not loaded!");
+          alert.setContentText("Error while loading the image.");
+          alert.showAndWait();
         }
         double extraCost = extraItems * 1.99;
         double sandwichTotal = extraCost + 12.99;
@@ -251,25 +281,12 @@ public class OrderStageController implements Initializable {
         basicIngredients.setText("* Grilled Snapper\n* Cilantro\n* Lime");
       }
     }
-
- /*   @FXML
-    void submitOrder(ActionEvent event) {
-      orderDB.printOrderLine();
-      Alert alert = new Alert(AlertType.CONFIRMATION);
-      alert.setTitle("Successfull!!");
-      alert.setHeaderText("Order Placed!");
-      alert.setContentText("Your order has been successfully submitted. ");
-      alert.showAndWait();
-      orderDB = new Order();
-      extraItems = 0;
-      loadDefaultSandwich();
-      extraList.forEach(extra -> {
-        if(extra.isSelected())
-          extra.setSelected(false);
-      });
-    } */
     
     @FXML
+    /**
+     * clears the selected options
+     * @param event
+     */
     void clearSelected(ActionEvent event) {
       loadDefaultSandwich();
       extraList.forEach(extra -> {
@@ -280,6 +297,10 @@ public class OrderStageController implements Initializable {
     }
 
     @FXML
+    /**
+     * opens another window to view order details
+     * @param event
+     */
     void viewOrder(ActionEvent event) {
       try {
             loader = new FXMLLoader(getClass().getResource("OrderSummary.FXML"));
@@ -296,11 +317,18 @@ public class OrderStageController implements Initializable {
     		stage.show(); 
       }
       catch(Exception e) {
-        e.printStackTrace();
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error!!");
+        alert.setHeaderText("Sandwich image not loaded!");
+        alert.setContentText("Error while loading the image.");
+        alert.showAndWait();
       }
     }
 
     @Override
+    /**
+     * initializes this stage
+     */
     public void initialize(java.net.URL arg0, ResourceBundle arg1) {
        loadExtraIngredients();
        loadDefaultSandwich();

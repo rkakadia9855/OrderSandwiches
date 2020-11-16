@@ -1,3 +1,7 @@
+/**
+ * This class is the main class of this program
+ * @author John Juarez, Rudra Kakadia
+ */
 package application;
 	
 import javafx.application.Application;

@@ -1,3 +1,7 @@
+/**
+ * This class represents the parent Sandwich class
+ * @author John Juarez, Rudra Kakadia
+ */
 package application;
 
 import java.util.ArrayList;

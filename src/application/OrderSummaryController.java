@@ -1,3 +1,7 @@
+/**
+ * This class is a controller for 2nd stage
+ * @author John Juarez, Rudra Kakadia
+ */
 package application;
 
 import java.io.BufferedWriter;
@@ -51,32 +55,49 @@ public class OrderSummaryController implements Initializable{
     
     Order list;
     
+    /**
+     * initializes the order that was passed
+     * @param order2
+     */
     public void selectOrder(Order order2) {
     	list = order2;
     	fillListView();
     }
     
+    /**
+     * sets view controller 1 reference
+     * @param arg - the 1st view controller
+     */
     public void setView1Controller(OrderStageController arg) {
       this.controller1 = arg;
     }
     
+    /**
+     * fills the listview with order details
+     */
     public void fillListView() {
-     // list.
       int numOrders = list.numOrders();
       for(int i = 0; i < numOrders; i++) {
         orderlist.add(list.getDetails(i));
       }
-    //  orderlist.add(list.printOrderLine());
       receipt.getItems().addAll(orderlist);
       total.setText(String.format("%.2f", list.getOrderTotal()));
     }
     
+    /**
+     * updates the screen after a sandwich was added from 1st stage
+     * @param updatedLine
+     */
     public void updateScreen(String updatedLine) {
       orderlist.add(updatedLine);
       receipt.getItems().add(updatedLine);
       total.setText(String.format("%.2f", list.getOrderTotal()));
     }
     
+    /**
+     * updates the screen after a sandwich was removed from 1st stage
+     * @param updatedLine
+     */
      public void updateScreen2(String updatedLine) {
         orderlist.remove(updatedLine);
         receipt.getItems().remove(updatedLine);
@@ -84,12 +105,20 @@ public class OrderSummaryController implements Initializable{
       }
 	
     @FXML
+    /**
+     * closes 2nd stage window
+     * @param event
+     */
     void backToOrder(ActionEvent event) {
     	Stage stage = (Stage) back.getScene().getWindow();
         stage.close();
     }
 
     @FXML
+    /**
+     * empties the order
+     * @param event
+     */
     void clearOrder(ActionEvent event) {
 	 receipt.getItems().removeAll(orderlist);
     	 list = new Order();
@@ -98,6 +127,10 @@ public class OrderSummaryController implements Initializable{
     }
 
     @FXML
+    /**
+     * saves the order details to another file
+     * @param event
+     */
     void exportOrder(ActionEvent event) {
       FileChooser chooser = new FileChooser();
       chooser.setTitle("Open Target File for the Export");
@@ -123,6 +156,10 @@ public class OrderSummaryController implements Initializable{
     }
 
     @FXML
+    /**
+     * repeats an order
+     * @param event
+     */
     void orderAgain(ActionEvent event) {
       ObservableList<String> orders = receipt.getSelectionModel().getSelectedItems();
       orders.forEach(order -> {
@@ -131,6 +168,11 @@ public class OrderSummaryController implements Initializable{
       });
     }
     
+    /**
+     *  replicates the order that needs to be repeated
+     * @param index - the index of the order that needs to be repeated
+     * @return true if success, false otherwise
+     */
     public boolean replicatedOrder(int index) {
       OrderLine copy = null;
       int getIndex = list.getSerialNumber(index);
@@ -156,6 +198,10 @@ public class OrderSummaryController implements Initializable{
     }
 
     @FXML
+    /**
+     * removes the sandwich
+     * @param event
+     */
     void removeSandwich(ActionEvent event) {
 	
 	final int selectedIdx = receipt.getSelectionModel().getSelectedIndex();
@@ -179,6 +225,9 @@ public class OrderSummaryController implements Initializable{
 
 
 	@Override
+	/**
+	 * initializes the stage
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 	    receipt.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
