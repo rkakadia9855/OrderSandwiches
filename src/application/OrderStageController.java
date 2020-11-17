@@ -288,11 +288,16 @@ public class OrderStageController implements Initializable {
      * @param event
      */
     void clearSelected(ActionEvent event) {
-      loadDefaultSandwich();
+      combo.getSelectionModel().selectFirst();
+      price.setText("$ 8.99");
+      basicIngredients.setText("* Fried Chicken\n* Spicy Sauce\n* Pickles");
+      sandwichPhoto.setImage(new Image("Resources\\ChickenSandwich.JPG"));
       extraList.forEach(extra -> {
         if(extra.isSelected())
           extra.setSelected(false);
+        extra.setDisable(false);
       });
+      extraItems = 0;
       selectedExtra.getItems().removeAll(extraSelectedList);
     }
 
